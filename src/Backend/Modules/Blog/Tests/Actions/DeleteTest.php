@@ -38,7 +38,8 @@ class DeleteTest extends WebTestCase
             $client->getResponse()->getContent()
         );
 
-        $link = $crawler->selectLink('OK')->link();
+        // note that this button is located in a modal, so not shown by default
+        $link = $crawler->selectLink('Ok')->link();
         $client->click($link);
 
         // we're now on the delete page of the blogpost with id 1
