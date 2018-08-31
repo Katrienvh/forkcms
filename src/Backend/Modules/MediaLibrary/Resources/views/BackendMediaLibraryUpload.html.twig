@@ -87,14 +87,16 @@
           </div>
           <div class="panel-body">
             <div class="form-group last">
-              <ul class="list-unstyled">
-                <li class="radiobutton">
-                  <label><input type="radio" name="uploading_type" id="uploadTypeDefault" value="all" checked="checked" /> {{ 'msg.MediaUploadTypeFiles'|trans }}</label>
-                </li>
-                <li class="radiobutton">
-                  <label><input type="radio" name="uploading_type" value="movie" /> {{ 'msg.MediaUploadTypeMovies'|trans }}</label>
-                </li>
-              </ul>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="uploading_type" id="uploadTypeDefault" value="all" checked="checked" /> {{ 'msg.MediaUploadTypeFiles'|trans }}
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                    <input type="radio" name="uploading_type" value="movie" /> {{ 'msg.MediaUploadTypeMovies'|trans }}
+                  </label>
+                </div>
             </div>
           </div>
         </div>
@@ -108,15 +110,12 @@
           <h2 class="panel-title">{{ 'msg.MediaUploadToThisFolder'|trans }}</h2>
         </div>
         <div class="panel-body">
-          <p>
+          <div class="form-group last">
             <label for="folder">{{ 'lbl.MediaFolder'|trans|capitalize }}{{ macro.required }}</label>
-            <select id="uploadMediaFolderId" name="uploadMediaFolderId">
+            <select class="form-control" id="uploadMediaFolderId" name="uploadMediaFolderId">
               <option>{{ 'lbl.Loading'|trans|ucfirst }}</option>
-            </select>&nbsp;&nbsp;
-            <a href="#" id="addFolder" title="{{ 'lbl.MediaAddFolder'|trans|capitalize }}">
-              <span>{{ 'msg.MediaOrAddMediaFolder'|trans }}</span>
-            </a>
-          </p>
+            </select>
+          </div>
         </div>
       </div>
     </div>
