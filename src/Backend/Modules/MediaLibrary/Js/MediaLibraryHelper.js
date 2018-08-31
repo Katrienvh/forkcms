@@ -1074,12 +1074,6 @@ jsBackend.mediaLibraryHelper.upload = {
     // bind click to add movie
     $('#addMediaMovie').on('click', jsBackend.mediaLibraryHelper.upload.insertMovie)
 
-    // bind change to upload folder
-    $('#uploadMediaFolderId').on('change', function () {
-      // update upload button
-      jsBackend.mediaLibraryHelper.upload.toggleUploadBoxes()
-    }).trigger('change')
-
     // bind delete actions
     $('#uploadedMedia').on('click', '.deleteMediaItem', function () {
       $(this).parent().remove()
@@ -1107,7 +1101,7 @@ jsBackend.mediaLibraryHelper.upload = {
 
   init: function () {
     // redefine media folder id
-    mediaFolderId = $('#uploadMediaFolderId').val()
+    mediaFolderId = jsBackend.data.get('MediaLibrary.openedFolderId')
 
     // check if we need to cropper is mandatory
     jsBackend.mediaLibraryHelper.upload.toggleCropper()
@@ -1128,7 +1122,7 @@ jsBackend.mediaLibraryHelper.upload = {
       callbacks: {
         onUpload: function (event) {
           // redefine media folder id
-          mediaFolderId = $('#uploadMediaFolderId').val()
+          mediaFolderId = jsBackend.data.get('MediaLibrary.openedFolderId')
 
           // We must set the endpoint dynamically, because "uploadMediaFolderId" is null at start and is async loaded using AJAX.
           this.setEndpoint('/backend/ajax?fork[module]=MediaLibrary&fork[action]=MediaItemUpload&fork[language]=' + jsBackend.current.language + '&folder_id=' + mediaFolderId)
@@ -1226,7 +1220,7 @@ jsBackend.mediaLibraryHelper.upload = {
     e.preventDefault()
 
     // update media for folder
-    mediaFolderId = $('#uploadMediaFolderId').val()
+    mediaFolderId = jsBackend.data.get('MediaLibrary.openedFolderId')
 
     // define variables
     var storageType = $('#mediaMovieStorageType').find(':checked').val()
@@ -1296,7 +1290,6 @@ jsBackend.mediaLibraryHelper.upload = {
   toggleUploadBoxes: function () {
     // init variables
     var $uploadingType = $('#uploadMediaTypeBox input[name=uploading_type]')
-    var folderSelected = ($('#uploadMediaFolderId').val() !== 0)
     var showMediaTypeBox = false // step 2
     var showMediaBox = false // step 2
     var showMovieBox = false // step 2
@@ -1322,16 +1315,18 @@ jsBackend.mediaLibraryHelper.upload = {
     }
 
     // if we have media uploaded, show the uploaded box
-    if (jsBackend.mediaLibraryHelper.upload.uploadedCount > 0) showUploadedBox = true
+    if (jsBackend.mediaLibraryHelper.upload.uploadedCount > 0) {
+      showUploadedBox = true
+    }
 
     // we want to upload media
     if ($uploadingType.filter(':checked').val() === 'all') {
       // if we have selected a folder, show the upload media box
-      if (folderSelected) showMediaBox = true
-      // we want to add movies (from youtube, ...)
+      showMediaBox = true
+    // we want to add movies (from youtube, ...)
     } else {
       // if we have selected a folder, show the upload media box
-      if (folderSelected) showMovieBox = true
+      showMovieBox = true
     }
 
     // update show upload type choise
@@ -1346,19 +1341,6 @@ jsBackend.mediaLibraryHelper.upload = {
     // toggle uploaded box
     $('#uploadedMediaBox').toggle(showUploadedBox)
     $('#mediaWillBeConnectedToMediaGroup').toggle((currentMediaGroupId !== 0))
-
-    if (jsBackend.mediaLibraryHelper.upload.uploadedCount === 0) {
-      $('[data-role=uploadMediaStep1]').show()
-      $('[data-role=uploadMediaStep2]').hide()
-    } else {
-      $('[data-role=uploadMediaStep1]').hide()
-      $('[data-role=uploadMediaStep2]').show()
-    }
-
-    $('[data-role=uploadMediaGoToStep2]').on('click', function () {
-      $('[data-role=uploadMediaStep1]').hide()
-      $('[data-role=uploadMediaStep2]').show()
-    })
   },
 
   /**
