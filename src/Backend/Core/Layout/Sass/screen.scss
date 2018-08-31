@@ -55,6 +55,9 @@ $fa-font-path: '/fonts/vendors';
 @import 'layouts/fork';
 @import 'layouts/footer';
 
+// Modules
+@import 'modules/_media-library';
+
 // Custom page styling
 // Insert custom page styling here. Put all page styles in the pages/ directory
 // eg. @import 'pages/footer';
