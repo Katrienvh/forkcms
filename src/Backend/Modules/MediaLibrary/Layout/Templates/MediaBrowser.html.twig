@@ -13,7 +13,23 @@
         <div class="content">
           <div class="container-fluid container-fluid-large">
             <div class="row">
-              <div class="col-sm-12">
+              <div class="col-sm-3">
+                <div id="mediaTree">
+                  <button class="btn btn-default btn-block btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
+                    <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
+                  </button>
+                  <div id="tree">
+                    {{ tree|raw }}
+                  </div>
+
+                  <div class="pages-tree-actions pages-tree-actions-browser">
+                    <a class="btn btn-default btn-block" href="#" id="addFolder" title="{{ 'lbl.MediaAddFolder'|trans|capitalize }}">
+                      <span><i class="fa fa-folder"></i> {{ 'lbl.MediaAddFolder'|trans|ucfirst }}</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-9">
                 <ul class="nav nav-tabs" role="tablist">
                   <li role="presentation" class="pull-right">
                     <a href="#tabUploadMedia" aria-controls="tabUploadMedia" role="tab"
@@ -30,17 +46,7 @@
                   </div>
                   <div role="tabpanel" class="tab-pane active" id="tabLibrary">
                     <div class="row">
-                      <div class="col-sm-3">
-                        <div id="mediaTree">
-                          <button class="btn btn-default btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
-                            <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
-                          </button>
-                          <div id="tree">
-                            {{ tree|raw }}
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-sm-9">
+                      <div class="col-sm-12">
                         {% set alreadyOneActive = false %}
                         <ul class="nav nav-tabs" role="tablist">
                           {% for dataGrid in dataGrids %}
@@ -93,6 +99,9 @@
     </div>
   </div>
 </div>
+
+{# Add folder dialog #}
+{% include "MediaLibrary/Resources/views/BackendMediaLibraryUploadDialogAddFolder.html.twig" %}
 
 <div class="hidden">
   <div class="modal fade jsConfirmation" tabindex="-1" role="dialog" aria-hidden="true">

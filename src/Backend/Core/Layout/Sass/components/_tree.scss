@@ -11,6 +11,21 @@
 */
 .pages-tree {
   padding: 20px 25px;
+
+  .btn {
+    margin-bottom: 20px;
+  }
+}
+
+.pages-tree-actions {
+  border-top: 1px solid $gray-lighter;
+  margin: 20px 25px;
+  padding: 20px 0;
+
+  &.pages-tree-actions-browser {
+    margin: 20px 0;
+  }
+
 }
 
 #tree {

@@ -7,12 +7,18 @@
       <div class="alert alert-warning visible-xs visible-sm">
         <p>{{ macro.icon('exclamation-triangle') }}{{ 'msg.MoveMediaFoldersNotPossible'|trans|ucfirst }}</p>
       </div>
-      <button class="btn btn-default btn-sm tree-collapsed" data-role="toggle-js-tree-collapse">
+      <button class="btn btn-default btn-sm btn-block tree-collapsed" data-role="toggle-js-tree-collapse">
         <span data-role="toggle-js-tree-collapse-text">{{ 'lbl.OpenTreeNavigation'|trans }}</span>
       </button>
       <div id="tree">
         {{ tree|raw }}
       </div>
+    </div>
+
+    <div class="pages-tree-actions">
+      <a class="btn btn-default btn-block" href="#" id="addFolder" title="{{ 'lbl.MediaAddFolder'|trans|capitalize }}">
+        <span><i class="fa fa-folder"></i> {{ 'lbl.MediaAddFolder'|trans|ucfirst }}</span>
+      </a>
     </div>
   </div>
 {% endblock %}
@@ -38,8 +44,17 @@
 {% block content %}
   <div class="row fork-module-content">
     <div id="library" class="col-md-12">
-      <div class="content-title">
-        <h2>{{ mediaFolder.Name }}</h2>
+      <div class="content-title clearfix">
+        <h2 class="pull-left">
+          {{ mediaFolder.Name }}
+        </h2>
+        {% if mediaFolder %}
+          {% if showMediaLibraryMediaFolderEdit %}
+            <div class="pull-right">
+              {{ macro.buttonIcon('', 'pencil', 'lbl.EditMediaFolder'|trans|ucfirst, 'btn-default btn-xs', {"data-toggle":"modal", "data-target":"#editMediaFolderDialog", "type":"button" } ) }}
+            </div>
+          {% endif %}
+        {% endif %}
       </div>
       <div>
         <ul class="nav nav-tabs" role="tablist">
@@ -83,9 +98,6 @@
                   {% if not mediaFolder.hasConnectedItems and not mediaFolder.hasChildrenWithConnectedItems %}
                     {{ macro.buttonIcon('', 'trash-o', 'lbl.MediaFolderDelete'|trans|ucfirst, 'btn-danger', {"data-toggle":"modal", "data-target":"#confirmMediaFolderDelete", "type":"button" } ) }}
                   {% endif %}
-                {% endif %}
-                {% if showMediaLibraryMediaFolderEdit %}
-                  {{ macro.buttonIcon('', 'pencil', 'lbl.EditMediaFolder'|trans|ucfirst, 'btn-default', {"data-toggle":"modal", "data-target":"#editMediaFolderDialog", "type":"button" } ) }}
                 {% endif %}
               </div>
             {% endif %}
