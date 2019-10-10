@@ -90,6 +90,7 @@ gulp.task('build:backend:assets:copy-js-vendors', function () {
     'node_modules/jquery-migrate/dist/jquery-migrate.min.js',
     'node_modules/jquery-ui-dist/jquery-ui.min.js',
     'node_modules/bootstrap-sass/assets/javascripts/bootstrap.min.js',
+    'node_modules/popper.js/dist/umd/popper.min.js',
     'node_modules/bootstrap-tagsinput/dist/bootstrap-tagsinput.min.js',
     'node_modules/fine-uploader/jquery.fine-uploader/jquery.fine-uploader.min.js',
     'node_modules/simple-ajax-uploader/SimpleAjaxUploader.min.js',
@@ -162,6 +163,13 @@ gulp.task('build:frontend:assets:copy-js-vendors', function () {
   .pipe(gulp.dest('js/vendors'))
 })
 
+gulp.task('build:frontend:assets:copy-bootstrap4-js', function () {
+  return gulp.src([
+    'node_modules/bootstrap/dist/js/bootstrap.min.js'
+  ])
+    .pipe(gulp.dest('js/vendors/bootstrap4'))
+})
+
 gulp.task('build:frontend:assets:copy-photoswipe-css-and-images', function () {
   return gulp.src([
     'node_modules/photoswipe/dist/photoswipe.css',
@@ -218,6 +226,7 @@ gulp.task('build:frontend:sass:generate-module-css', function () {
 gulp.task('build:frontend', function () {
   gulp.start(
     'build:frontend:assets:copy-images-vendors',
+    'build:frontend:assets:copy-bootstrap4-js',
     'build:frontend:assets:copy-js-vendors',
     'build:frontend:assets:copy-photoswipe-css-and-images',
     'build:frontend:sass:generate-css',
