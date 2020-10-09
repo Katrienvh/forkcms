@@ -126,7 +126,7 @@ export class Forms {
     const $inputDatefieldTill = $('.inputDatefieldTill')
     const $inputDatefieldRange = $('.inputDatefieldRange')
 
-    $('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').datepicker(
+    $('.inputDatefieldNormal, .inputDatefieldFrom, .inputDatefieldTill, .inputDatefieldRange').flatpickr(
       {
         dayNames: dayNames,
         dayNamesMin: dayNamesMin,
@@ -411,7 +411,7 @@ export class Forms {
   // Add date pickers to the appropriate input elements
   datePicker () {
     $('input[data-role="fork-datepicker"]').each((index, datePickerElement) => {
-      $(datePickerElement).datepicker()
+      $(datePickerElement).flatpickr()
     })
   }
 }
