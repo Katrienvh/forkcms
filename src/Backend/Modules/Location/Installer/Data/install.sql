@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `location` (
   `lat` float DEFAULT NULL,
   `lng` float DEFAULT NULL,
   `show_overview` tinyint(1) NOT NULL DEFAULT '1',
+  `override_map_settings` tinyint(1) NOT NULL DEFAULT '0',
   `created_on` datetime NOT NULL,
   `edited_on` datetime NOT NULL,
   PRIMARY KEY (`id`)

@@ -15,6 +15,10 @@
         <translation language="el"><![CDATA[Δεν έγινε δυνατό η διεύθυνση να μετατραπεί σε συντεταγμένες.]]></translation>
         <translation language="pl"><![CDATA[Adres nie mógł zostać przetowrzony na współrzędne.]]></translation>
       </item>
+      <item type="label" name="OverrideMapSettings">
+        <translation language="nl"><![CDATA[settings overschrijven]]></translation>
+        <translation language="en"><![CDATA[override settings]]></translation>
+      </item>
       <item type="label" name="AddToMap">
         <translation language="nl"><![CDATA[aan kaart toevoegen]]></translation>
         <translation language="en"><![CDATA[add to map]]></translation>

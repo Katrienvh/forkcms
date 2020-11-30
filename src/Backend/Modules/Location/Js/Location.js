@@ -25,24 +25,22 @@ jsBackend.location = {
     if ($('#map').length > 0 && typeof markers !== 'undefined' && typeof mapOptions !== 'undefined') {
       jsBackend.location.showMap()
 
-      // add listeners for the zoom level and terrain
+      // add listeners for the zoom level and terrain and center
       google.maps.event.addListener(jsBackend.location.map, 'maptypeid_changed', jsBackend.location.setDropdownTerrain)
       google.maps.event.addListener(jsBackend.location.map, 'zoom_changed', jsBackend.location.setDropdownZoom)
-
+      google.maps.event.addListener(jsBackend.location.map, 'dragend', jsBackend.location.setCenter)
       // if the zoom level or map type changes in the dropdown, the map needs to change
       $('#zoomLevel').bind('change', function () { jsBackend.location.setMapZoom($('#zoomLevel').val()) })
       $('#mapType').bind('change', jsBackend.location.setMapTerrain)
       $('#mapStyle').bind('change', jsBackend.location.setMapStyle)
-
-      // the panning save option
-      $('#saveLiveData').bind('click', function (e) {
-        e.preventDefault()
-
-        // save the live map data
-        jsBackend.location.getMapData()
-        jsBackend.location.saveLiveData()
-      })
+      jsBackend.location.getMapData()
     }
+    $('[data-role=toggle-settings]').on('change', function () {
+      $('#settings').hide()
+      if ($(this).is(':checked')) {
+        $('#settings').show()
+      }
+    }).change()
   },
 
   /**
@@ -142,40 +140,6 @@ jsBackend.location = {
   },
 
   /**
-   * Save live data will save the setting in database
-   */
-  saveLiveData: function () {
-    $.ajax({
-      data: {
-        fork: {module: 'Location', action: 'SaveLiveLocation'},
-        zoom: jsBackend.location.zoomLevel,
-        type: jsBackend.location.type,
-        style: jsBackend.location.style,
-        centerLat: jsBackend.location.centerLat,
-        centerLng: jsBackend.location.centerLng,
-        height: jsBackend.location.height,
-        width: jsBackend.location.width,
-        id: jsBackend.location.mapId,
-        link: jsBackend.location.showLink,
-        directions: jsBackend.location.showDirections,
-        showOverview: jsBackend.location.showOverview
-      },
-      success: function (json, textStatus) {
-        // reload the page on success
-        if (json.code === 200) {
-          // no redirect given, refresh the page
-          if (typeof $('input#redirect').val() === 'undefined') {
-            jsBackend.location.refreshPage('map-saved')
-          }
-
-          $('input#redirect').val('edit')
-          $('form#edit').submit()
-        }
-      }
-    })
-  },
-
-  /**
    * Set dropdown terrain will set the terrain type of the map to the dropdown
    */
   setDropdownTerrain: function () {
@@ -237,6 +201,13 @@ jsBackend.location = {
     } else {
       jsBackend.location.map.setZoom(parseInt(zoomlevel))
     }
+  },
+
+  setCenter: function () {
+    jsBackend.location.getMapData()
+    console.log(this)
+    $('#centerLat').val(jsBackend.location.centerLat)
+    $('#centerLng').val(jsBackend.location.centerLng)
   },
 
   /**
@@ -304,21 +275,8 @@ jsBackend.location = {
   updateMarker: function (marker) {
     jsBackend.location.getMapData()
 
-    var lat = marker.getPosition().lat()
-    var lng = marker.getPosition().lng()
-
-    $.ajax({
-      data: {
-        fork: {module: 'Location', action: 'UpdateMarker'},
-        id: jsBackend.location.mapId,
-        lat: lat,
-        lng: lng
-      },
-      success: function (json, textStatus) {
-        // reload the page on success
-        if (json.code === 200) jsBackend.location.saveLiveData()
-      }
-    })
+    $('#lat').val(marker.getPosition().lat())
+    $('#lng').val(marker.getPosition().lng())
   }
 }
 
